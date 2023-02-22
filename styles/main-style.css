@@ -9,13 +9,13 @@ body {
     background-color: var(--xoSquareColor);
 }
 
-.xo-container {
+#xo-container {
     display: grid;
     grid-template-columns: repeat(3, var(--xoSquareSize));
     grid-gap: 0px var(--xoSquareBorderSize);
 }
 
-.xo-container .xo-square {
+#xo-container .xo-square {
     height: var(--xoSquareSize);
     width: var(--xoSquareSize);
     background-color: var(--xoSquareColor);

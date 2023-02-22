@@ -9,6 +9,7 @@ const squareFactory = (xo, i, j) => {
 };
 
 //filling up squareMatrix with initial values
+//to make the array multidimensional
 for (let i=0; i<=2; i++) {
     let arr = [];
     for(let j=0; j<=2; j++) {
@@ -18,8 +19,34 @@ for (let i=0; i<=2; i++) {
     squareMatrix.push(arr);
 }
 
-console.log(squareMatrix);
-console.log(squareMatrix[0][0].xo);
+//function to add x or 0
+const addXO = function(e) {
+    //console.log(e.target.id);
+    let i = e.target.id[e.target.id.length-2];
+    let j = e.target.id[e.target.id.length-1];
+    let elem = document.getElementById(e.target.id);
+    elem.innerHTML = squareMatrix[i][j].xo;
+    console.log("i: " + i);
+    console.log("j: " + j);
+    console.log(squareMatrix[i][j].xo);
+
+}
+
+//adding event listeners to the squares
+let xoContainerElem = document.getElementById("xo-container");
+//console.log(xoContainerElem);
+//console.log(xoContainerElem.children);
+//console.log(xoContainerElem.childElementCount);
+let xoContainerElemChildren = xoContainerElem.children;
+for (let i=0; i< xoContainerElemChildren.length; i++) {
+    //console.log(xoContainerElemChildren[i]);
+    xoContainerElemChildren[i].addEventListener("click", addXO);
+}
+
+
+
+//console.log(squareMatrix);
+//console.log(squareMatrix[0][0].xo);
 
 
 
