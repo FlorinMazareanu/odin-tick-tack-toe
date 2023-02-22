@@ -1,3 +1,6 @@
+//note: the first script that loads is "start-script.js"
+//that one loads as soon as the page loads
+
 //multidimensional array to represent the squares and their content
 let squareMatrix = [];
 
@@ -40,7 +43,7 @@ let xoContainerElem = document.getElementById("xo-container");
 let xoContainerElemChildren = xoContainerElem.children;
 for (let i=0; i< xoContainerElemChildren.length; i++) {
     //console.log(xoContainerElemChildren[i]);
-    xoContainerElemChildren[i].addEventListener("click", addXO);
+    xoContainerElemChildren[i].addEventListener("pointerdown", addXO);
 }
 
 
@@ -48,5 +51,5 @@ for (let i=0; i< xoContainerElemChildren.length; i++) {
 //console.log(squareMatrix);
 //console.log(squareMatrix[0][0].xo);
 
-
-
+//let test = localStorage.getItem(0);
+//console.log(test);

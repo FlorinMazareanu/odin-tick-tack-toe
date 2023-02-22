@@ -7,13 +7,24 @@
      <link rel="stylesheet" href="styles/main-style.css">
     <title>Odin Project - Tick-Tack-Toe</title>
 </head>
+<script src="scripts/start-script.js"></script>
 <body>
     <div class="xo-selectors-container">
-        <div class="xo-selection">
-            <button id="select-x" class="select-button">X</button>
+        <div class="xo-selections">
+            <div class="xo-selection">
+                <button id="select-x" class="select-button">Play as X</button>
+            </div>
+            <div class="xo-selection">
+                <button id="select-y" class="select-button">Play as Y</button>
+            </div>
         </div>
-        <div class="xo-selection">
-            <button id="select-y" class="select-button">Y</button>
+        <div class="human-computer-selections">
+            <div class="human-computer-selection">
+                <button id="select-human" class="select-button">Play vs Human</button>
+            </div>
+            <div class="human-computer-selection">
+                <button id="select-computer" class="select-button">Play vs Computer</button>
+            </div>
         </div>
     </div>
     <div id="xo-container">
