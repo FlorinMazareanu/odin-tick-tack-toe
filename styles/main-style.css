@@ -1,3 +1,67 @@
+:root {
+    --xoSquareColor: aquamarine;
+    --xoSquareSize: 9rem;
+    --xoSquareBorderColor: black;
+    --xoSquareBorderSize: 2px;
+}
+
 body {
-    background-color: aqua;
+    background-color: var(--xoSquareColor);
+}
+
+.xo-container {
+    display: grid;
+    grid-template-columns: repeat(3, var(--xoSquareSize));
+    grid-gap: 0px var(--xoSquareBorderSize);
+}
+
+.xo-container .xo-square {
+    height: var(--xoSquareSize);
+    width: var(--xoSquareSize);
+    background-color: var(--xoSquareColor);
+}
+#xo-square-00 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px var(--xoSquareBorderSize) var(--xoSquareBorderSize) 0px;
+}
+#xo-square-01 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px var(--xoSquareBorderSize) var(--xoSquareBorderSize) 0px;
+}
+#xo-square-02 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px 0px var(--xoSquareBorderSize) 0px;
+}
+#xo-square-10 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px var(--xoSquareBorderSize) var(--xoSquareBorderSize) 0px;
+}
+#xo-square-11 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px var(--xoSquareBorderSize) var(--xoSquareBorderSize) 0px;
+}
+#xo-square-12 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px 0px var(--xoSquareBorderSize) 0px;
+}
+#xo-square-20 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px var(--xoSquareBorderSize) 0px 0px;
+}
+#xo-square-21 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px var(--xoSquareBorderSize) 0px 0px;
+}
+#xo-square-22 {
+    border-color: var(--xoSquareBorderColor);
+    border-style: solid;
+    border-width: 0px 0px 0px 0px;
 }
