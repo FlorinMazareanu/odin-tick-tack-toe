@@ -8,7 +8,7 @@ console.log("main-script.js is running...");
 let squareMatrix = [];
 
 //factory function to fill the squares
-//n will eventually become either x or 0
+//n will eventually become either x or o
 //i and j are just positions like in a C++ matrix
 const squareFactory = (xo, i, j) => {
     return {xo, i, j};
@@ -69,7 +69,7 @@ const addXO = function(e) {
     console.log("round " + currentRound);
     let currentXo = "";
     if (currentRound %2 == 0) {
-        currentXo = "y";
+        currentXo = "o";
     }
     else {
         currentXo = "x";
@@ -92,22 +92,3 @@ for (let i=0; i< xoContainerElemChildren.length; i++) {
     xoContainerElemChildren[i].addEventListener("pointerdown", addXO);
 }
 
-/*
-//function that iterates through the game's rounds
-function gamePlayer(xo, ch) {
-    console.log("you play as " + xo);
-    for (let i=1; i<=9; i++) {
-        console.log("round " + i + " vs "+ ch);
-        if (i % 2 != 0) {
-            console.log("x's turn");
-            checkWinner("x");
-        }
-        else {
-            console.log("y's turn");
-            checkWinner("y");
-        }
-    }
-}
-
-gamePlayer(localStorage.getItem("xoSelection"), localStorage.getItem("playVs"));
-*/

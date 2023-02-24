@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     //defining xo and human/computer buttons as variables
     let selectXElem = document.getElementById("select-x");
-    let selectYElem = document.getElementById("select-y");
+    let selectOElem = document.getElementById("select-o");
     let selectHElem = document.getElementById("select-human");
     let selectCElem = document.getElementById("select-computer");
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem("xoSelection", e.target.id[e.target.id.length - 1]);
         selections++;
         selectXElem.removeEventListener("pointerdown", selectXO);
-        selectYElem.removeEventListener("pointerdown", selectXO);
+        selectOElem.removeEventListener("pointerdown", selectXO);
         if (selections == 2) {
             runMainScript();
         }
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     selectXElem.addEventListener("pointerdown", selectXO);
-    selectYElem.addEventListener("pointerdown", selectXO);
+    selectOElem.addEventListener("pointerdown", selectXO);
     selectHElem.addEventListener("pointerdown", selectPlayAs);
     selectCElem.addEventListener("pointerdown", selectPlayAs);
 
