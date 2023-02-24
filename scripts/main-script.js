@@ -1,10 +1,6 @@
 //test to see if the script runs
 console.log("main-script.js is running...");
 
-//test imports
-import { testImportExport } from "./start-script";
-console.log testImportExport;
-
 //note: the first script that loads is "start-script.js"
 //that one loads as soon as the page loads
 
@@ -31,26 +27,52 @@ for (let i=0; i<=2; i++) {
 
 //function to add x or 0
 const addXO = function(e) {
-    //console.log(e.target.id);
+    console.log("addXO");
+    console.log(e.target);
     let i = e.target.id[e.target.id.length-2];
     let j = e.target.id[e.target.id.length-1];
     let elem = document.getElementById(e.target.id);
+    squareMatrix[i][j].xo = localStorage.getItem("xoSelection");
     elem.innerHTML = squareMatrix[i][j].xo;
-    console.log("i: " + i);
-    console.log("j: " + j);
-    console.log(squareMatrix[i][j].xo);
-
+    e.target.removeEventListener("pointerdown", addXO);
 }
 
 //adding event listeners to the squares
 let xoContainerElem = document.getElementById("xo-container");
-//console.log(xoContainerElem);
-//console.log(xoContainerElem.children);
-//console.log(xoContainerElem.childElementCount);
 let xoContainerElemChildren = xoContainerElem.children;
 for (let i=0; i< xoContainerElemChildren.length; i++) {
-    //console.log(xoContainerElemChildren[i]);
     xoContainerElemChildren[i].addEventListener("pointerdown", addXO);
+}
+
+//function to evaluate if someone won
+//there are only 8 possible cases
+function checkWinner(currentPlayer) {
+    console.log("currentPlayer: " + currentPlayer);
+    console.log(squareMatrix[0][0].xo);
+    /*
+    if ((squareMatrix[0][0].xo == currentPlayer) && (squareMatrix[0][1].xo == currentPlayer) && (squareMatrix[0][1].xo == currentPlayer)) {
+        console.log("test win");
+    }
+    */
+    if (
+        (squareMatrix[0][0].xo == currentPlayer) && (squareMatrix[0][1].xo == currentPlayer) && (squareMatrix[0][2].xo == currentPlayer)
+        ||
+        (squareMatrix[1][0].xo == currentPlayer) && (squareMatrix[1][1].xo == currentPlayer) && (squareMatrix[1][2].xo == currentPlayer)
+        ||
+        (squareMatrix[2][0].xo == currentPlayer) && (squareMatrix[2][1].xo == currentPlayer) && (squareMatrix[2][2].xo == currentPlayer)
+        ||
+        (squareMatrix[0][0].xo == currentPlayer) && (squareMatrix[1][0].xo == currentPlayer) && (squareMatrix[2][0].xo == currentPlayer)
+        ||
+        (squareMatrix[0][1].xo == currentPlayer) && (squareMatrix[1][1].xo == currentPlayer) && (squareMatrix[2][1].xo == currentPlayer)
+        ||
+        (squareMatrix[0][2].xo == currentPlayer) && (squareMatrix[1][2].xo == currentPlayer) && (squareMatrix[2][2].xo == currentPlayer)
+        ||
+        (squareMatrix[0][0].xo == currentPlayer) && (squareMatrix[1][1].xo == currentPlayer) && (squareMatrix[2][2].xo == currentPlayer)
+        ||
+        (squareMatrix[0][2].xo == currentPlayer) && (squareMatrix[1][1].xo == currentPlayer) && (squareMatrix[2][0].xo == currentPlayer)
+    ) {
+        console.log(`test win: ${currentPlayer} won!`);
+    }
 }
 
 //function that iterates through the game's rounds
@@ -58,35 +80,15 @@ function gamePlayer(xo, ch) {
     console.log("you play as " + xo);
     for (let i=1; i<=9; i++) {
         console.log("round " + i + " vs "+ ch);
+        if (i % 2 != 0) {
+            console.log("x's turn");
+            checkWinner("x");
+        }
+        else {
+            console.log("y's turn");
+            checkWinner("y");
+        }
     }
 }
 
-/*
-if ((localStorage.getItem("xoSelection") == "x" || localStorage.getItem("xoSelection") == "y") && (localStorage.getItem("playVs") == "human" || localStorage.getItem("playVs") == "computer")) {
-    gamePlayer(localStorage.getItem("xoSelection"), localStorage.getItem("playVs"));
-}
-*/
-
-/*
-if (
-    (localStorage.getItem("xoSelection") == "x" || localStorage.getItem("xoSelection") == "y") 
-    && 
-    (localStorage.getItem("playVs") == "human" || localStorage.getItem("playVs") == "computer")
-) {
-    gamePlayer(localStorage.getItem("xoSelection"), localStorage.getItem("playVs"));
-}
-*/
-
-//a promise test
-/*
-const testPromise = new Promise((resolve, reject) => {
-    if (1 < 2) {
-        resolve("1 < 2 indeed");
-    }
-});
-
-testPromise.then((success) => {
-    console.log("success!");
-    console.log(success);
-});
-*/
+gamePlayer(localStorage.getItem("xoSelection"), localStorage.getItem("playVs"));

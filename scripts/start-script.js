@@ -1,10 +1,6 @@
 //test to see if start-script.js is running
 console.log("start-script is running...");
 
-//text exports
-let testImportExport = "test import export";
-export { testImportExport };
-
 //this script is for the initial setup of the game
 //like selecting either X or 0
 //or selecting human vs human or computer vs computer
@@ -31,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function runMainScript() {
         let mainScript = document.createElement("script");
         mainScript.setAttribute("src", "scripts/main-script.js");
-        mainScript.setAttribute("type", "module");
         document.body.appendChild(mainScript);
     }
     
@@ -46,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
         //setting localstorage key "selection" to either x or y
         localStorage.setItem("xoSelection", e.target.id[e.target.id.length - 1]);
         selections++;
-        console.log(selections);
         selectXElem.removeEventListener("pointerdown", selectXO);
         selectYElem.removeEventListener("pointerdown", selectXO);
         if (selections == 2) {
@@ -56,17 +50,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //function to select to play vs human or vs computer
     const selectPlayAs = function(e) {
-        //console.log("selecting play vs");
-        //console.log(e.target.id);
         if (e.target.id == "select-human") {
             localStorage.setItem("playVs", "human");
         }
         else {
             localStorage.setItem("playVs", "computer");
         }
-        //localStorage.setItem("playVS")
         selections++;
-        console.log(selections);
         selectHElem.removeEventListener("pointerdown", selectPlayAs);
         selectCElem.removeEventListener("pointerdown", selectPlayAs);
         if (selections == 2) {
@@ -79,35 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     selectHElem.addEventListener("pointerdown", selectPlayAs);
     selectCElem.addEventListener("pointerdown", selectPlayAs);
 
-    /*
-    //a promise that X/O and human/computer will be selected
-    const promiseXoHc = new Promise((resolve, reject) => {
-        if (
-        (localStorage.getItem("xoSelection") == "x" || localStorage.getItem("xoSelection") == "y") 
-        && 
-        (localStorage.getItem("playVs") == "human" || localStorage.getItem("playVs") == "computer")
-        ) {
-        resolve("selections were made");
-        }   
-    });
-
-    promiseXoHc.then((success) => {
-        console.log(success);
-    });
-
-    //a promise test
     
-    const testPromise = new Promise((resolve, reject) => {
-        if (1 < 2) {
-            resolve("1 < 2 indeed");
-        }
-    });
-
-    testPromise.then((success) => {
-        console.log("success!");
-        console.log(success);
-    });
-    */
 
   }, false);
 
