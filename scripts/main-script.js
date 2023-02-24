@@ -25,27 +25,10 @@ for (let i=0; i<=2; i++) {
     squareMatrix.push(arr);
 }
 
-//function to add x or 0
-const addXO = function(e) {
-    console.log("addXO");
-    console.log(e.target);
-    let i = e.target.id[e.target.id.length-2];
-    let j = e.target.id[e.target.id.length-1];
-    let elem = document.getElementById(e.target.id);
-    squareMatrix[i][j].xo = localStorage.getItem("xoSelection");
-    elem.innerHTML = squareMatrix[i][j].xo;
-    e.target.removeEventListener("pointerdown", addXO);
-}
-
-//adding event listeners to the squares
-let xoContainerElem = document.getElementById("xo-container");
-let xoContainerElemChildren = xoContainerElem.children;
-for (let i=0; i< xoContainerElemChildren.length; i++) {
-    xoContainerElemChildren[i].addEventListener("pointerdown", addXO);
-}
-
 //function to evaluate if someone won
 //there are only 8 possible cases
+let currentRound = 1;
+let winner = "";
 function checkWinner(currentPlayer) {
     console.log("currentPlayer: " + currentPlayer);
     console.log(squareMatrix[0][0].xo);
@@ -72,9 +55,44 @@ function checkWinner(currentPlayer) {
         (squareMatrix[0][2].xo == currentPlayer) && (squareMatrix[1][1].xo == currentPlayer) && (squareMatrix[2][0].xo == currentPlayer)
     ) {
         console.log(`test win: ${currentPlayer} won!`);
+        winner = currentPlayer;
+        for (let i=0; i< xoContainerElemChildren.length; i++) {
+            xoContainerElemChildren[i].removeEventListener("pointerdown", addXO);
+        }
     }
 }
 
+//function to add x or 0
+const addXO = function(e) {
+    console.log("addXO");
+    console.log("e.target.innerHTML: " + e.target.innerHTML);
+    console.log("round " + currentRound);
+    let currentXo = "";
+    if (currentRound %2 == 0) {
+        currentXo = "y";
+    }
+    else {
+        currentXo = "x";
+    }
+    let i = e.target.id[e.target.id.length-2];
+    let j = e.target.id[e.target.id.length-1];
+    let elem = document.getElementById(e.target.id);
+    squareMatrix[i][j].xo = currentXo;
+    elem.innerHTML = squareMatrix[i][j].xo;
+    console.log(squareMatrix[i][j].xo);
+    checkWinner(squareMatrix[i][j].xo);
+    e.target.removeEventListener("pointerdown", addXO);
+    currentRound++;
+}
+
+//adding event listeners to the squares
+let xoContainerElem = document.getElementById("xo-container");
+let xoContainerElemChildren = xoContainerElem.children;
+for (let i=0; i< xoContainerElemChildren.length; i++) {
+    xoContainerElemChildren[i].addEventListener("pointerdown", addXO);
+}
+
+/*
 //function that iterates through the game's rounds
 function gamePlayer(xo, ch) {
     console.log("you play as " + xo);
@@ -92,3 +110,4 @@ function gamePlayer(xo, ch) {
 }
 
 gamePlayer(localStorage.getItem("xoSelection"), localStorage.getItem("playVs"));
+*/
