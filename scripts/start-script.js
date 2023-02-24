@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function runMainScript() {
         let mainScript = document.createElement("script");
         mainScript.setAttribute("src", "scripts/main-script.js");
+        mainScript.setAttribute("type", "module");
         document.body.appendChild(mainScript);
     }
     
