@@ -2,7 +2,7 @@
 console.log("start-script is running...");
 
 //text exports
-let testImportExport = "test";
+let testImportExport = "test import export";
 export { testImportExport };
 
 //this script is for the initial setup of the game

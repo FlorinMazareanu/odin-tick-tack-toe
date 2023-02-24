@@ -3,6 +3,7 @@ console.log("main-script.js is running...");
 
 //test imports
 import { testImportExport } from "./start-script";
+console.log testImportExport;
 
 //note: the first script that loads is "start-script.js"
 //that one loads as soon as the page loads
