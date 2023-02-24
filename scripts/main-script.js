@@ -1,3 +1,9 @@
+//test to see if the script runs
+console.log("main-script.js is running...");
+
+//test imports
+import { testImportExport } from "./start-script";
+
 //note: the first script that loads is "start-script.js"
 //that one loads as soon as the page loads
 
@@ -46,10 +52,40 @@ for (let i=0; i< xoContainerElemChildren.length; i++) {
     xoContainerElemChildren[i].addEventListener("pointerdown", addXO);
 }
 
+//function that iterates through the game's rounds
+function gamePlayer(xo, ch) {
+    console.log("you play as " + xo);
+    for (let i=1; i<=9; i++) {
+        console.log("round " + i + " vs "+ ch);
+    }
+}
 
+/*
+if ((localStorage.getItem("xoSelection") == "x" || localStorage.getItem("xoSelection") == "y") && (localStorage.getItem("playVs") == "human" || localStorage.getItem("playVs") == "computer")) {
+    gamePlayer(localStorage.getItem("xoSelection"), localStorage.getItem("playVs"));
+}
+*/
 
-//console.log(squareMatrix);
-//console.log(squareMatrix[0][0].xo);
+/*
+if (
+    (localStorage.getItem("xoSelection") == "x" || localStorage.getItem("xoSelection") == "y") 
+    && 
+    (localStorage.getItem("playVs") == "human" || localStorage.getItem("playVs") == "computer")
+) {
+    gamePlayer(localStorage.getItem("xoSelection"), localStorage.getItem("playVs"));
+}
+*/
 
-//let test = localStorage.getItem(0);
-//console.log(test);
+//a promise test
+/*
+const testPromise = new Promise((resolve, reject) => {
+    if (1 < 2) {
+        resolve("1 < 2 indeed");
+    }
+});
+
+testPromise.then((success) => {
+    console.log("success!");
+    console.log(success);
+});
+*/
