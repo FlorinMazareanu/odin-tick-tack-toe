@@ -69,8 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
     selectHElem.addEventListener("pointerdown", selectPlayAs);
     selectCElem.addEventListener("pointerdown", selectPlayAs);
 
-    
-
   }, false);
 
 
