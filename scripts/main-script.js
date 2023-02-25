@@ -1,9 +1,16 @@
 //note: the first script that loads is "start-script.js"
 //that one loads as soon as the page loads
 
-//defining the current x/o and the players
+//defining the current x/o, round, number of filled squares
+let gameWon = 0;
+let winner = "";
 let currentXo;
 let currentRound = 1;
+let numFilled = 0;
+gameOverMessage = "";
+
+//defining game over
+let gameOver = 0;
 
 //multidimensional array to represent the squares and their content
 let squareMatrix = [];
@@ -41,32 +48,70 @@ function makeSquareUnclickable(i, j) {
 function checkWinner() {
     //console.log("checkWinner runs");
     //console.log("currentPlayer: " + currentXo);
+    console.log("numFilled at checkWinner: " + numFilled);
     if (
-        (squareMatrix[0][0].xo == currentXo) && (squareMatrix[0][1].xo == currentXo) && (squareMatrix[0][2].xo == currentXo)
+        (squareMatrix[0][0].xo == "x") && (squareMatrix[0][1].xo == "x") && (squareMatrix[0][2].xo == "x")
         ||
-        (squareMatrix[1][0].xo == currentXo) && (squareMatrix[1][1].xo == currentXo) && (squareMatrix[1][2].xo == currentXo)
+        (squareMatrix[1][0].xo == "x") && (squareMatrix[1][1].xo == "x") && (squareMatrix[1][2].xo == "x")
         ||
-        (squareMatrix[2][0].xo == currentXo) && (squareMatrix[2][1].xo == currentXo) && (squareMatrix[2][2].xo == currentXo)
+        (squareMatrix[2][0].xo == "x") && (squareMatrix[2][1].xo == "x") && (squareMatrix[2][2].xo == "x")
         ||
-        (squareMatrix[0][0].xo == currentXo) && (squareMatrix[1][0].xo == currentXo) && (squareMatrix[2][0].xo == currentXo)
+        (squareMatrix[0][0].xo == "x") && (squareMatrix[1][0].xo == "x") && (squareMatrix[2][0].xo == "x")
         ||
-        (squareMatrix[0][1].xo == currentXo) && (squareMatrix[1][1].xo == currentXo) && (squareMatrix[2][1].xo == currentXo)
+        (squareMatrix[0][1].xo == "x") && (squareMatrix[1][1].xo == "x") && (squareMatrix[2][1].xo == "x")
         ||
-        (squareMatrix[0][2].xo == currentXo) && (squareMatrix[1][2].xo == currentXo) && (squareMatrix[2][2].xo == currentXo)
+        (squareMatrix[0][2].xo == "x") && (squareMatrix[1][2].xo == "x") && (squareMatrix[2][2].xo == "x")
         ||
-        (squareMatrix[0][0].xo == currentXo) && (squareMatrix[1][1].xo == currentXo) && (squareMatrix[2][2].xo == currentXo)
+        (squareMatrix[0][0].xo == "x") && (squareMatrix[1][1].xo == "x") && (squareMatrix[2][2].xo == "x")
         ||
-        (squareMatrix[0][2].xo == currentXo) && (squareMatrix[1][1].xo == currentXo) && (squareMatrix[2][0].xo == currentXo)
+        (squareMatrix[0][2].xo == "x") && (squareMatrix[1][1].xo == "x") && (squareMatrix[2][0].xo == "x")
     ) {
-        console.log("winner: " + currentXo);
+        console.log("winner: " + "x");
+        gameOver = 1;
+        winner = "x"
         //making the entire board unclickable
         const xoContainer = document.getElementById("xo-container");
         xoContainer.classList.add("unclickable");
         xoContainer.childNodes.forEach(element => {
-            console.log(element);
+            //console.log(element);
             element.removeEventListener("pointerdown", addXo);
         });
-        
+        gameOverMessage = "X won!";
+        console.log(gameOverMessage);
+    }
+    if (
+        (squareMatrix[0][0].xo == "o") && (squareMatrix[0][1].xo == "o") && (squareMatrix[0][2].xo == "o")
+        ||
+        (squareMatrix[1][0].xo == "o") && (squareMatrix[1][1].xo == "o") && (squareMatrix[1][2].xo == "o")
+        ||
+        (squareMatrix[2][0].xo == "o") && (squareMatrix[2][1].xo == "o") && (squareMatrix[2][2].xo == "o")
+        ||
+        (squareMatrix[0][0].xo == "o") && (squareMatrix[1][0].xo == "o") && (squareMatrix[2][0].xo == "o")
+        ||
+        (squareMatrix[0][1].xo == "o") && (squareMatrix[1][1].xo == "o") && (squareMatrix[2][1].xo == "o")
+        ||
+        (squareMatrix[0][2].xo == "o") && (squareMatrix[1][2].xo == "o") && (squareMatrix[2][2].xo == "o")
+        ||
+        (squareMatrix[0][0].xo == "o") && (squareMatrix[1][1].xo == "o") && (squareMatrix[2][2].xo == "o")
+        ||
+        (squareMatrix[0][2].xo == "o") && (squareMatrix[1][1].xo == "o") && (squareMatrix[2][0].xo == "o")
+    ) {
+        console.log("winner: " + "o");
+        gameOver = 1;
+        winner = "o"
+        //making the entire board unclickable
+        const xoContainer = document.getElementById("xo-container");
+        xoContainer.classList.add("unclickable");
+        xoContainer.childNodes.forEach(element => {
+            //console.log(element);
+            element.removeEventListener("pointerdown", addXo);
+        });
+        gameOverMessage = "O won!";
+        console.log(gameOverMessage);
+    }
+    if (numFilled == 9 && gameOver == 0) {
+        gameOverMessage = "It's a tie!"
+        console.log(gameOverMessage);
     }
 }
 
@@ -89,6 +134,8 @@ const addXo = function(e) {
     squareMatrix[i][j].xo = currentXo;
     squareMatrix[i][j].isClickable = "no";       
     currentSquare.innerHTML = currentXo;
+    numFilled++;
+    console.log("numFilled: " + numFilled);
                        
     currentRound++;
     makeSquareUnclickable(i, j);
@@ -97,7 +144,6 @@ const addXo = function(e) {
     if (localStorage.getItem("playVs") == "computer") {
         computerMove(currentXo);
     }
-
     checkWinner();
 
 }
@@ -128,6 +174,8 @@ function computerMove(xo) {
                 let currentSquare = document.getElementById("xo-square-" + i + j);
                 //console.log(currentSquare);
                 currentSquare.innerHTML = xo;
+                numFilled++;
+                console.log("numFilled: " + numFilled);
                 moveWasMade = 1;
             }
         }
