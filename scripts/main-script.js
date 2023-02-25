@@ -27,6 +27,14 @@ for (let i=0; i<=2; i++) {
     squareMatrix.push(arr);
 }
 
+//function to make a square unclickable
+function makeSquareUnclickable(i, j) {
+
+    squareMatrix[i][j].isClickable = "no";
+
+    let currentSquareElem = document.getElementById("xo-square-" + i + j);
+    currentSquareElem.removeEventListener("pointerdown", addXo);
+}
 
 //function to evaluate if someone won
 //there are only 8 possible cases
@@ -70,41 +78,48 @@ const addXo = function(e) {
     let j = e.target.id[e.target.id.length-1];
     let currentSquare = document.getElementById(e.target.id);
 
-    //deciding if the move will be made by human or computer
-        switch (true) {
-            //my turn vs human
-            case (currentXo == localStorage.getItem("xoSelection")) && (localStorage.getItem("playVs") == "human"):
-                //console.log("my turn vs human");
-                squareMatrix[i][j].xo = currentXo;        
-                currentSquare.innerHTML = currentXo;
-                break;
-            //my turn vs computer
-            case (currentXo == localStorage.getItem("xoSelection")) && (localStorage.getItem("playVs") == "computer"):
-                //console.log("my turn vs computer");
-                squareMatrix[i][j].xo = currentXo;
-                currentSquare.innerHTML = currentXo;
-                break;
-            //their turn as human
-            case (currentXo != localStorage.getItem("xoSelection")) && (localStorage.getItem("playVs") == "human"):
-                //console.log("their turn as human");
-                squareMatrix[i][j].xo = currentXo;
-                currentSquare.innerHTML = currentXo;
-                break;
-            //their turn as computer
-            case (currentXo != localStorage.getItem("xoSelection")) && (localStorage.getItem("playVs") == "computer"):
-                //console.log("their turn as computer");
-                squareMatrix[i][j].xo = currentXo;
-                currentSquare.innerHTML = currentXo;
-                break;
-            default:
-                break;
-                
-            }
+    squareMatrix[i][j].xo = currentXo;
+    squareMatrix[i][j].isClickable = "no";       
+    currentSquare.innerHTML = currentXo;
+                       
     currentRound++;
     makeSquareUnclickable(i, j);
     checkWinner();
 
 }
+
+//function to make the computer make a move
+function computerMove(xo) {
+    console.log("computerMove");
+    let moveWasMade = 0;
+    let i = 0;
+    let j = 0;
+    while (!moveWasMade) {
+        let randomI = Math.floor(Math.random() * 3);
+        let randomJ = Math.floor(Math.random() * 3);
+        if (squareMatrix[randomI][randomJ].xo == "n") {
+            squareMatrix[randomI][randomJ].xo = xo;
+            i = randomI;
+            j = randomJ;
+            moveWasMade = 1;
+        }
+    }
+    let currentSquare = document.getElementById("xo-square-" + i + j);
+    console.log(currentSquare);
+    currentSquare.innerHTML = currentXo;
+    makeSquareUnclickable(i, j);
+    checkWinner();
+}
+
+//special case in which the computer goes first
+if (currentRound == 1 && localStorage.getItem("playVs") == "computer" && localStorage.getItem("xoSelection") == "o") {
+    console.log("computer makes the first move");
+    currentXo = "x";
+    console.log(currentXo);
+    computerMove("x");
+}
+
+
 
 
 //function to make a square clickable
@@ -113,15 +128,6 @@ function makeSquareClickable(i, j) {
     let currentSquareElem = document.getElementById("xo-square-" + i + j);
     currentSquareElem.addEventListener("pointerdown", addXo);
 
-}
-
-//function to make a square unclickable
-function makeSquareUnclickable(i, j) {
-
-    squareMatrix[i][j].isClickable = "no";
-
-    let currentSquareElem = document.getElementById("xo-square-" + i + j);
-    currentSquareElem.removeEventListener("pointerdown", addXo);
 }
 
 //making all squares clickable before the game starts
