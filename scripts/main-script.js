@@ -39,8 +39,8 @@ function makeSquareUnclickable(i, j) {
 //function to evaluate if someone won
 //there are only 8 possible cases
 function checkWinner() {
-    console.log("checkWinner runs");
-    console.log("currentPlayer: " + currentXo);
+    //console.log("checkWinner runs");
+    //console.log("currentPlayer: " + currentXo);
     if (
         (squareMatrix[0][0].xo == currentXo) && (squareMatrix[0][1].xo == currentXo) && (squareMatrix[0][2].xo == currentXo)
         ||
@@ -59,13 +59,21 @@ function checkWinner() {
         (squareMatrix[0][2].xo == currentXo) && (squareMatrix[1][1].xo == currentXo) && (squareMatrix[2][0].xo == currentXo)
     ) {
         console.log("winner: " + currentXo);
+        //making the entire board unclickable
+        const xoContainer = document.getElementById("xo-container");
+        xoContainer.classList.add("unclickable");
+        xoContainer.childNodes.forEach(element => {
+            console.log(element);
+            element.removeEventListener("pointerdown", addXo);
+        });
+        
     }
 }
 
 //function to add x or 0 as a player
 const addXo = function(e) {
 
-    console.log("round " + currentRound);
+    //console.log("round " + currentRound);
 
     if (currentRound %2 == 0) {
         currentXo = "o";
@@ -102,8 +110,8 @@ function computerMove(xo) {
     else {
         xo = "x";
     }
-    console.log("computerMove");
-    console.log("currentXo in computerMove: " + xo);
+    //console.log("computerMove");
+    //console.log("currentXo in computerMove: " + xo);
     let moveWasMade = 0;
     let i = 0;
     let j = 0;
@@ -116,24 +124,26 @@ function computerMove(xo) {
                 squareMatrix[randomI][randomJ].xo = xo;
                 i = randomI;
                 j = randomJ;
+                console.log("computer made a move in " + i + j);
+                let currentSquare = document.getElementById("xo-square-" + i + j);
+                //console.log(currentSquare);
+                currentSquare.innerHTML = xo;
                 moveWasMade = 1;
             }
         }
     }
 
-    let currentSquare = document.getElementById("xo-square-" + i + j);
-    console.log(currentSquare);
-    currentSquare.innerHTML = xo;
+    
     currentRound++;
-    makeSquareUnclickable(i, j);
     checkWinner();
+    makeSquareUnclickable(i, j);  
 }
 
 //special case in which the computer goes first
 if (currentRound == 1 && localStorage.getItem("playVs") == "computer" && localStorage.getItem("xoSelection") == "o") {
-    console.log("computer makes the first move");
+    //console.log("computer makes the first move");
     currentXo = "x";
-    console.log(currentXo);
+    //console.log(currentXo);
     computerMove("x");
 }
 
@@ -151,7 +161,7 @@ function makeSquareClickable(i, j) {
 //making all squares clickable before the game starts
 //by default, the isClickable property is "yes"
 //but the DOM elements anre not yet clickable
-console.log(squareMatrix);
+//console.log(squareMatrix);
 for (let i=0; i<squareMatrix.length; i++) {
     for (let j=0; j<squareMatrix.length; j++) {
 

@@ -19,6 +19,10 @@ body {
     height: var(--xoSquareSize);
     width: var(--xoSquareSize);
     background-color: var(--xoSquareColor);
+    font-size: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #xo-square-00 {
     border-color: var(--xoSquareBorderColor);
@@ -64,4 +68,7 @@ body {
     border-color: var(--xoSquareBorderColor);
     border-style: solid;
     border-width: 0px 0px 0px 0px;
+}
+.unlickable {
+    pointer-events: none;
 }
