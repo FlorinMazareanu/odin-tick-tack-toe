@@ -84,29 +84,47 @@ const addXo = function(e) {
                        
     currentRound++;
     makeSquareUnclickable(i, j);
+    console.log("currentXo in addXo: " + currentXo);
+    
+    if (localStorage.getItem("playVs") == "computer") {
+        computerMove(currentXo);
+    }
+
     checkWinner();
 
 }
 
 //function to make the computer make a move
 function computerMove(xo) {
+    if (currentRound %2 == 0) {
+        xo = "o";
+    }
+    else {
+        xo = "x";
+    }
     console.log("computerMove");
+    console.log("currentXo in computerMove: " + xo);
     let moveWasMade = 0;
     let i = 0;
     let j = 0;
-    while (!moveWasMade) {
-        let randomI = Math.floor(Math.random() * 3);
-        let randomJ = Math.floor(Math.random() * 3);
-        if (squareMatrix[randomI][randomJ].xo == "n") {
-            squareMatrix[randomI][randomJ].xo = xo;
-            i = randomI;
-            j = randomJ;
-            moveWasMade = 1;
+    //the page dies if I don't do this if statemen (infinite loop?)
+    if (currentRound < 9) {
+        while (!moveWasMade) {
+            let randomI = Math.floor(Math.random() * 3);
+            let randomJ = Math.floor(Math.random() * 3);
+            if (squareMatrix[randomI][randomJ].xo == "n") {
+                squareMatrix[randomI][randomJ].xo = xo;
+                i = randomI;
+                j = randomJ;
+                moveWasMade = 1;
+            }
         }
     }
+
     let currentSquare = document.getElementById("xo-square-" + i + j);
     console.log(currentSquare);
-    currentSquare.innerHTML = currentXo;
+    currentSquare.innerHTML = xo;
+    currentRound++;
     makeSquareUnclickable(i, j);
     checkWinner();
 }
