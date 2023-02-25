@@ -1,6 +1,3 @@
-//test to see if start-script.js is running
-console.log("start-script is running...");
-
 //this script is for the initial setup of the game
 //like selecting either X or 0
 //or selecting human vs human or computer vs computer
