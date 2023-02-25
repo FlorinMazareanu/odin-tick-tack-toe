@@ -7,10 +7,10 @@ let winner = "";
 let currentXo;
 let currentRound = 1;
 let numFilled = 0;
-gameOverMessage = "";
 
 //defining game over
 let gameOver = 0;
+const gameOverElem = document.getElementById("game-over-result");
 
 //multidimensional array to represent the squares and their content
 let squareMatrix = [];
@@ -21,7 +21,6 @@ let squareMatrix = [];
 const squareFactory = (xo, i, j, isClickable) => {
     return {xo, i, j, isClickable};
 };
-
 
 //filling up squareMatrix with initial values
 //to make the array multidimensional
@@ -46,9 +45,6 @@ function makeSquareUnclickable(i, j) {
 //function to evaluate if someone won
 //there are only 8 possible cases
 function checkWinner() {
-    //console.log("checkWinner runs");
-    //console.log("currentPlayer: " + currentXo);
-    console.log("numFilled at checkWinner: " + numFilled);
     if (
         (squareMatrix[0][0].xo == "x") && (squareMatrix[0][1].xo == "x") && (squareMatrix[0][2].xo == "x")
         ||
@@ -66,18 +62,15 @@ function checkWinner() {
         ||
         (squareMatrix[0][2].xo == "x") && (squareMatrix[1][1].xo == "x") && (squareMatrix[2][0].xo == "x")
     ) {
-        console.log("winner: " + "x");
         gameOver = 1;
         winner = "x"
         //making the entire board unclickable
         const xoContainer = document.getElementById("xo-container");
         xoContainer.classList.add("unclickable");
         xoContainer.childNodes.forEach(element => {
-            //console.log(element);
             element.removeEventListener("pointerdown", addXo);
         });
-        gameOverMessage = "X won!";
-        console.log(gameOverMessage);
+        gameOverElem.innerHTML = "X won!";
     }
     if (
         (squareMatrix[0][0].xo == "o") && (squareMatrix[0][1].xo == "o") && (squareMatrix[0][2].xo == "o")
@@ -96,30 +89,23 @@ function checkWinner() {
         ||
         (squareMatrix[0][2].xo == "o") && (squareMatrix[1][1].xo == "o") && (squareMatrix[2][0].xo == "o")
     ) {
-        console.log("winner: " + "o");
         gameOver = 1;
         winner = "o"
         //making the entire board unclickable
         const xoContainer = document.getElementById("xo-container");
         xoContainer.classList.add("unclickable");
         xoContainer.childNodes.forEach(element => {
-            //console.log(element);
             element.removeEventListener("pointerdown", addXo);
         });
-        gameOverMessage = "O won!";
-        console.log(gameOverMessage);
+        gameOverElem.innerHTML = "O won!";
     }
     if (numFilled == 9 && gameOver == 0) {
-        gameOverMessage = "It's a tie!"
-        console.log(gameOverMessage);
+        gameOverElem.innerHTML = "It's a tie!";
     }
 }
 
 //function to add x or 0 as a player
 const addXo = function(e) {
-
-    //console.log("round " + currentRound);
-
     if (currentRound %2 == 0) {
         currentXo = "o";
     }
@@ -135,11 +121,9 @@ const addXo = function(e) {
     squareMatrix[i][j].isClickable = "no";       
     currentSquare.innerHTML = currentXo;
     numFilled++;
-    console.log("numFilled: " + numFilled);
                        
     currentRound++;
     makeSquareUnclickable(i, j);
-    console.log("currentXo in addXo: " + currentXo);
     
     if (localStorage.getItem("playVs") == "computer") {
         computerMove(currentXo);
@@ -156,8 +140,7 @@ function computerMove(xo) {
     else {
         xo = "x";
     }
-    //console.log("computerMove");
-    //console.log("currentXo in computerMove: " + xo);
+
     let moveWasMade = 0;
     let i = 0;
     let j = 0;
@@ -170,12 +153,9 @@ function computerMove(xo) {
                 squareMatrix[randomI][randomJ].xo = xo;
                 i = randomI;
                 j = randomJ;
-                console.log("computer made a move in " + i + j);
                 let currentSquare = document.getElementById("xo-square-" + i + j);
-                //console.log(currentSquare);
                 currentSquare.innerHTML = xo;
                 numFilled++;
-                console.log("numFilled: " + numFilled);
                 moveWasMade = 1;
             }
         }
@@ -189,9 +169,7 @@ function computerMove(xo) {
 
 //special case in which the computer goes first
 if (currentRound == 1 && localStorage.getItem("playVs") == "computer" && localStorage.getItem("xoSelection") == "o") {
-    //console.log("computer makes the first move");
     currentXo = "x";
-    //console.log(currentXo);
     computerMove("x");
 }
 
@@ -209,13 +187,10 @@ function makeSquareClickable(i, j) {
 //making all squares clickable before the game starts
 //by default, the isClickable property is "yes"
 //but the DOM elements anre not yet clickable
-//console.log(squareMatrix);
 for (let i=0; i<squareMatrix.length; i++) {
     for (let j=0; j<squareMatrix.length; j++) {
-
         currentI = squareMatrix[i][j].i;
         currentJ = squareMatrix[i][j].j;
-
         makeSquareClickable(currentI, currentJ);
     }
 }

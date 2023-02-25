@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
         selections++;
         selectXElem.removeEventListener("pointerdown", selectXO);
         selectOElem.removeEventListener("pointerdown", selectXO);
+        //changing aspect of buttons:
+        console.log(e.target);
+        e.target.classList.add("select-button-clicked");
         if (selections == 2) {
             runMainScript();
         }
@@ -56,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
         selections++;
         selectHElem.removeEventListener("pointerdown", selectPlayAs);
         selectCElem.removeEventListener("pointerdown", selectPlayAs);
+
+        //changing aspect of buttons:
+        e.target.classList.add("select-button-clicked");
         if (selections == 2) {
             runMainScript();
         }
