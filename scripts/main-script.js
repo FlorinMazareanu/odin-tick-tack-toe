@@ -145,7 +145,7 @@ function computerMove(xo) {
     let i = 0;
     let j = 0;
     //the page dies if I don't do this if statemen (infinite loop?)
-    if (currentRound < 9) {
+    if (currentRound <= 9) {
         while (!moveWasMade) {
             let randomI = Math.floor(Math.random() * 3);
             let randomJ = Math.floor(Math.random() * 3);
